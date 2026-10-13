@@ -155,7 +155,7 @@ function select(id){
   document.getElementById('d-reco').innerHTML=p.reco;
   document.querySelectorAll('.packm').forEach(el=>el.classList.toggle('sel',el.dataset.id===id));
 }
-const map=L.map('map',{zoomControl:true,attributionControl:false}).setView([-53.772,-67.775],12);
+const map=L.map('map',{zoomControl:true,attributionControl:false,scrollWheelZoom:false}).setView([-53.772,-67.775],12);
 L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',{maxZoom:18}).addTo(map);
 function label(ll,html,anchor){L.marker(ll,{interactive:false,icon:L.divIcon({className:'',html:`<div class="lbl">${html}</div>`,iconAnchor:anchor||[-12,8]})}).addTo(map);}
 function icon(ll,html,size,anchor,opts){return L.marker(ll,Object.assign({icon:L.divIcon({className:'',html,iconSize:size,iconAnchor:anchor})},opts||{})).addTo(map);}
