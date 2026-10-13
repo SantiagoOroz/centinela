@@ -146,6 +146,36 @@
     </table>
   </section>
 
+  <section class="grid">
+    <div class="sec">
+      <h2>Reporte vecinal por WhatsApp <small>la IA de lenguaje convierte el mensaje en un registro</small></h2>
+      <div class="wa">
+        <div style="flex:1">
+          <textarea id="msg">Hola, recién vi como 5 perros grandes en Chacra XIII al lado del canal, eran las 7 de la mañana, uno tenía collar rojo. Iban para el lado del campo.</textarea>
+          <div style="margin-top:8px;display:flex;gap:8px">
+            <button class="primary" onclick="parseReport()">Procesar con IA</button>
+            <button onclick="document.getElementById('msg').value='Anoche 3 perros atacaron ovejas en Ea. María Behety, cerca de las 23 hs, se fueron hacia la ruta';parseReport()">Ejemplo: ataque</button>
+          </div>
+        </div>
+      </div>
+      <div class="out mono" id="out">
+        <div class="k">
+          <b>Tipo de evento</b><span id="o-type"></span>
+          <b>Cantidad de perros</b><span id="o-n"></span>
+          <b>Lugar</b><span id="o-place"></span>
+          <b>Hora</b><span id="o-time"></span>
+          <b>Indicio de dueño</b><span id="o-collar"></span>
+          <b>Dirección</b><span id="o-dir"></span>
+          <b>Jauría probable</b><span id="o-pack"></span>
+        </div>
+        <div style="margin-top:8px">Confianza del modelo <span id="o-conf"></span></div>
+        <div class="conf"><i id="o-bar" style="width:0"></i></div>
+        <div style="margin-top:8px;color:var(--ink2)">Registro agregado al mapa. Pendiente de validación por Zoonosis.</div>
+      </div>
+    </div>
+
+  </section>
+
 </main>
 
 <footer class="mono">CENTINELA · MVP con datos ficticios · Santiago Oroz · Challenge #AIforImpact2026 (NAUFest · JA Américas · HP)<br>La IA propone, las personas deciden · no identifica personas · prioriza castración y tenencia responsable, no la matanza de animales</footer>
@@ -197,6 +227,27 @@ function toast(t){const el=document.getElementById('toast');el.textContent=t;el.
 function validate(b){const tr=b.closest('tr');tr.lastElementChild.innerHTML='<span class="tag t-bajo">Validado por Zoonosis</span>';toast('Acción validada: pasa al plan de intervención');}
 function discard(b){const tr=b.closest('tr');tr.classList.add('done');tr.lastElementChild.innerHTML='<span class="tag t-medio">Descartado (falso positivo)</span>';toast('Descartado: el modelo aprende de esta corrección');}
 
+const places=[["agrotécnica","Esc. Agrotécnica Salesiana","J-02"],["salesiana","Esc. Agrotécnica Salesiana","J-02"],["misión","Esc. Agrotécnica Salesiana","J-02"],["chacra xiii","Chacra XIII","J-02 / J-05"],["chacra 13","Chacra XIII","J-02 / J-05"],["chacra ii","Chacra II (canal)","J-05"],["chacra 2","Chacra II (canal)","J-05"],["canal","Chacra II (canal)","J-05"],["margen sur","Margen Sur","J-04"],["behety","Ea. María Behety","J-01"],["cabo peñas","Cabo Peñas","J-03"],["ruta","Ruta 3","sin asignar"]];
+const words={"un":1,"uno":1,"una":1,"dos":2,"tres":3,"cuatro":4,"cinco":5,"seis":6,"siete":7,"ocho":8,"nueve":9,"diez":10};
+function parseReport(){
+  const t=document.getElementById('msg').value, l=t.toLowerCase();
+  let n=null; const m=l.match(/(\d+)\s*perr/); if(m) n=+m[1]; else for(const w in words){ if(new RegExp("\\b"+w+"\\s+perr").test(l)){n=words[w];break;} }
+  if(n===null){const m2=l.match(/\b(\d+)\b/); n=m2?+m2[1]:"no indicado";}
+  let place="no identificado", pack="sin asignar"; for(const [k,v,p] of places){ if(l.includes(k)){place=v;pack=p;break;} }
+  let time="no indicada"; const tm=l.match(/(?:las\s+)?(\d{1,2})(?::(\d{2}))?\s*(hs\b|h\b|de la mañana|de la tarde|de la noche|am\b|pm\b)/) || l.match(/las\s+(\d{1,2})(?::(\d{2}))?()/);
+  if(tm){ let h=+tm[1]; const suf=tm[3]||""; if(/tarde|pm/.test(suf)&&h<12)h+=12; if(/noche/.test(suf)&&h<12)h+=12; time=String(h).padStart(2,"0")+":"+(tm[2]||"00"); }
+  else if(/anoche|noche/.test(l)) time="noche (sin hora)"; else if(/madrugada/.test(l)) time="madrugada"; else if(/mañana/.test(l)) time="mañana (sin hora)";
+  const attack=/atac|mat[oó]|mordi|ovej|corder/.test(l);
+  const collar=/collar|chapa|dueñ/.test(l)?"Sí: al menos un perro con collar → buscar dueño":"No se menciona";
+  let dir="no indicada"; const dm=l.match(/(hacia|para el lado de|para|rumbo a)\s+(el |la |los |las )?([a-záéíóúñ0-9 ]{3,25})/); if(dm) dir=dm[3].trim();
+  const conf=Math.min(96, 55 + (n!=="no indicado"?12:0) + (place!=="no identificado"?16:0) + (time!=="no indicada"?10:0));
+  document.getElementById('o-type').textContent=attack?"ATAQUE a ganado (prioridad máxima)":"Avistamiento de jauría";
+  document.getElementById('o-n').textContent=n; document.getElementById('o-place').textContent=place; document.getElementById('o-time').textContent=time;
+  document.getElementById('o-collar').textContent=collar; document.getElementById('o-dir').textContent=dir; document.getElementById('o-pack').textContent=pack;
+  document.getElementById('o-conf').textContent=conf+"%"; document.getElementById('o-bar').style.width=conf+"%";
+  document.getElementById('out').style.display='block';
+  toast(attack?'Ataque registrado: alerta prioritaria generada':'Reporte estructurado y agregado al mapa');
+}
 </script>
 </body>
 </html>
