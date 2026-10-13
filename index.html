@@ -356,6 +356,7 @@ function analyze(){
   document.getElementById('ph-res').innerHTML='6 perros · 5 conocidos (jauría J-02) · 1 nuevo (RG-064). 1 con collar azul: posible dueño, buscar en el registro municipal. 5 sin collar, sucios o flacos: asilvestrados. Total de individuos: <b>64</b>.';document.getElementById('attrs').style.display='table';
   toast('Análisis completado en 1,2 s (simulado)');
 }
+if(location.hash==='#demo'){analyze();parseReport();}
 </script>
 </body>
 </html>
