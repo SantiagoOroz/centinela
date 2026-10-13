@@ -81,6 +81,7 @@
   footer{color:var(--ink2);font-size:12px;text-align:left;padding:18px 32px 28px;border-top:2px solid var(--ink);line-height:1.6;position:relative;z-index:1}
   .toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:var(--ink);color:var(--bone);padding:10px 16px;font-size:13px;opacity:0;transition:opacity .3s;pointer-events:none;z-index:2000}
   .toast.show{opacity:1}
+  @media (max-width:1000px){.grid{grid-template-columns:1fr}.kpis{grid-template-columns:repeat(2,1fr)}.flow{grid-template-columns:repeat(3,1fr)}#map{height:420px}}
 </style>
 </head>
 <body>
