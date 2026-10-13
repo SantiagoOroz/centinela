@@ -132,6 +132,20 @@
     </div>
   </section>
 
+  <section class="sec">
+    <h2>Ranking de intervención <small>propuesto por la IA · validado por Zoonosis municipal y Asociación Rural</small></h2>
+    <table id="rank">
+      <thead><tr><th>#</th><th>Zona</th><th>Jauría</th><th>Riesgo</th><th>Acción recomendada</th><th>Responsable</th><th>Revisión humana</th></tr></thead>
+      <tbody>
+        <tr><td class="display">1</td><td>Esc. Agrotécnica Salesiana y estancias vecinas</td><td class="mono">J-02</td><td><span class="tag t-alto">Alto</span></td><td>Alerta inmediata + refuerzo de guardia nocturna</td><td>Asociación Rural · Escuela</td><td><button class="small" onclick="validate(this)">Validar</button> <button class="small" onclick="discard(this)">Descartar</button></td></tr>
+        <tr><td class="display">2</td><td>Chacra XIII (barrio de origen)</td><td class="mono">J-02 · J-05</td><td><span class="tag t-alto">Alto</span></td><td>Operativo de castración + recuperación de 2 perros con collar</td><td>Zoonosis municipal</td><td><button class="small" onclick="validate(this)">Validar</button> <button class="small" onclick="discard(this)">Descartar</button></td></tr>
+        <tr><td class="display">3</td><td>Chacra II · canal</td><td class="mono">J-05</td><td><span class="tag t-alto">Alto</span></td><td>Instalar cámara trampa C-07 para confirmar jauría nueva</td><td>Equipo CENTINELA · CADIC</td><td><button class="small" onclick="validate(this)">Validar</button> <button class="small" onclick="discard(this)">Descartar</button></td></tr>
+        <tr><td class="display">4</td><td>Ea. María Behety</td><td class="mono">J-01</td><td><span class="tag t-medio">Medio</span></td><td>Aviso preventivo; revisar alambrados del sector norte</td><td>Productor</td><td><button class="small" onclick="validate(this)">Validar</button> <button class="small" onclick="discard(this)">Descartar</button></td></tr>
+        <tr><td class="display">5</td><td>Cabo Peñas · estancias del sur</td><td class="mono">J-03</td><td><span class="tag t-medio">Medio</span></td><td>Monitoreo; sin acción por ahora</td><td>Equipo CENTINELA</td><td><button class="small" onclick="validate(this)">Validar</button> <button class="small" onclick="discard(this)">Descartar</button></td></tr>
+      </tbody>
+    </table>
+  </section>
+
 </main>
 
 <footer class="mono">CENTINELA · MVP con datos ficticios · Santiago Oroz · Challenge #AIforImpact2026 (NAUFest · JA Américas · HP)<br>La IA propone, las personas deciden · no identifica personas · prioriza castración y tenencia responsable, no la matanza de animales</footer>
@@ -180,6 +194,9 @@ L.polyline([[-53.801,-67.755],[-53.79,-67.785],[-53.755,-67.785],[-53.7245,-67.7
 select('J-02');
 
 function toast(t){const el=document.getElementById('toast');el.textContent=t;el.classList.add('show');setTimeout(()=>el.classList.remove('show'),1800);}
+function validate(b){const tr=b.closest('tr');tr.lastElementChild.innerHTML='<span class="tag t-bajo">Validado por Zoonosis</span>';toast('Acción validada: pasa al plan de intervención');}
+function discard(b){const tr=b.closest('tr');tr.classList.add('done');tr.lastElementChild.innerHTML='<span class="tag t-medio">Descartado (falso positivo)</span>';toast('Descartado: el modelo aprende de esta corrección');}
+
 </script>
 </body>
 </html>
