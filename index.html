@@ -81,7 +81,6 @@
   footer{color:var(--ink2);font-size:12px;text-align:left;padding:18px 32px 28px;border-top:2px solid var(--ink);line-height:1.6;position:relative;z-index:1}
   .toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:var(--ink);color:var(--bone);padding:10px 16px;font-size:13px;opacity:0;transition:opacity .3s;pointer-events:none;z-index:2000}
   .toast.show{opacity:1}
-  @media (max-width:1000px){.grid{grid-template-columns:1fr}.kpis{grid-template-columns:repeat(2,1fr)}.flow{grid-template-columns:repeat(3,1fr)}#map{height:420px}}
 </style>
 </head>
 <body>
@@ -101,12 +100,86 @@
     <div class="kpi"><div class="v display">3</div><div class="l">Zonas en riesgo alto de ataque</div><div class="d ok">2 estancias y 1 escuela alertadas</div></div>
   </section>
 
+  <section class="grid">
+    <div class="sec">
+      <h2>Mapa vivo de jaurías <small>tocá una jauría para ver su ficha</small></h2>
+      <div id="map"></div>
+      <div class="legend mono">
+        <span><i style="background:#c8381f"></i>Riesgo alto</span>
+        <span><i style="background:#e9c23a"></i>Riesgo medio</span>
+        <span><i style="background:#5c6132"></i>Riesgo bajo</span>
+        <span><i style="background:#fff;border:1px solid #000"></i>Cámara trampa</span>
+        <span><i style="background:#e9c23a;border-radius:0"></i>Escuela rural</span>
+        <span>▲ Estancia</span>
+        <span>- - - Trayectoria estimada</span>
+        <span style="margin-left:auto">jaurías ficticias · lugares reales</span>
+      </div>
+    </div>
+
+    <div class="sec detail" id="detail">
+      <h2>Ficha de jauría <small class="mono" id="d-id">J-02</small></h2>
+      <div class="row"><b>Individuos re-identificados</b><span id="d-n"></span></div>
+      <div class="row"><b>Zona actual</b><span id="d-zone"></span></div>
+      <div class="row"><b>Origen probable</b><span id="d-origin"></span></div>
+      <div class="row"><b>Última detección</b><span id="d-last"></span></div>
+      <div class="row"><b>Detecciones (30 días)</b><span id="d-det"></span></div>
+      <div class="row"><b>Riesgo de ataque (7 días)</b><span id="d-risk"></span></div>
+      <div class="reco" id="d-reco"></div>
+      <div style="margin-top:14px;display:flex;gap:8px">
+        <button class="primary" onclick="toast('Alerta enviada por WhatsApp a 2 estancias y 1 escuela (simulado)')">Enviar alerta a la zona</button>
+        <button onclick="toast('Ficha marcada para revisión de Zoonosis (simulado)')">Pedir revisión</button>
+      </div>
+    </div>
+  </section>
+
 </main>
 
 <footer class="mono">CENTINELA · MVP con datos ficticios · Santiago Oroz · Challenge #AIforImpact2026 (NAUFest · JA Américas · HP)<br>La IA propone, las personas deciden · no identifica personas · prioriza castración y tenencia responsable, no la matanza de animales</footer>
 <div class="toast" id="toast"></div>
 
 <script>
+const C={alto:'#c8381f',medio:'#e9c23a',bajo:'#5c6132'};
+const packs = {
+  "J-02":{ll:[-53.755,-67.785],n:7,c:C.alto,r:2200,nTxt:"7 (1 con collar: posible dueño)",zone:"Entre Chacra II y la Escuela Agrotécnica Salesiana",origin:"Chacra XIII",last:"Cámara trampa C-03, 06:40",det:"23 fotos · 6 reportes vecinales",risk:'<span class="tag t-alto">ALTO · 82%</span>',reco:"<b>Acción propuesta por la IA:</b> alertar hoy a la Escuela Agrotécnica y a las estancias vecinas (parición en curso). Operativo de castración y búsqueda de dueños en Chacra XIII: 2 perros con collar coinciden con fotos del registro municipal."},
+  "J-05":{ll:[-53.79,-67.785],n:5,c:C.alto,r:1500,nTxt:"5 (jauría nueva, 3 individuos nunca vistos)",zone:"Chacra XIII, junto al canal",origin:"Chacra XIII / Chacra II",last:"Reporte vecinal por WhatsApp, 07:10",det:"4 fotos · 5 reportes vecinales",risk:'<span class="tag t-alto">ALTO · 71%</span>',reco:"<b>Acción propuesta por la IA:</b> confirmar con cámara trampa C-07 y visitar el barrio: es el momento de intervenir, todavía están cerca de las casas y probablemente tengan dueño."},
+  "J-01":{ll:[-53.825,-67.86],n:4,c:C.medio,r:1400,nTxt:"4",zone:"Sector oeste, Ea. María Behety",origin:"Zona oeste de la ciudad",last:"Cámara trampa C-05",det:"11 fotos · 1 reporte",risk:'<span class="tag t-medio">MEDIO · 48%</span>',reco:"<b>Acción propuesta por la IA:</b> aviso preventivo al productor y revisión de alambrados; sin parición activa en la zona."},
+  "J-03":{ll:[-53.865,-67.72],n:3,c:C.medio,r:1300,nTxt:"3",zone:"Costa sur, hacia Cabo Peñas",origin:"Desconocido",last:"Cámara trampa C-06",det:"7 fotos · 0 reportes",risk:'<span class="tag t-medio">MEDIO · 39%</span>',reco:"<b>Acción propuesta por la IA:</b> monitoreo; sin acción por ahora."},
+  "J-04":{ll:[-53.84,-67.80],n:2,c:C.bajo,r:900,nTxt:"2",zone:"Margen del río, al sur de la ciudad",origin:"Margen Sur",last:"Cámara trampa C-04",det:"3 fotos · 1 reporte",risk:'<span class="tag t-bajo">BAJO · 15%</span>',reco:"<b>Acción propuesta por la IA:</b> ninguna; posible par de perros de estancia. Verificar con el productor."}
+};
+function select(id){
+  const p=packs[id]; if(!p) return;
+  document.getElementById('d-id').textContent=id;
+  document.getElementById('d-n').textContent=p.nTxt;
+  for(const k of ['zone','origin','last','det']) document.getElementById('d-'+k).textContent=p[k];
+  document.getElementById('d-risk').innerHTML=p.risk;
+  document.getElementById('d-reco').innerHTML=p.reco;
+  document.querySelectorAll('.packm').forEach(el=>el.classList.toggle('sel',el.dataset.id===id));
+}
+const map=L.map('map',{zoomControl:true,attributionControl:false}).setView([-53.772,-67.775],12);
+L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',{maxZoom:18}).addTo(map);
+function label(ll,html,anchor){L.marker(ll,{interactive:false,icon:L.divIcon({className:'',html:`<div class="lbl">${html}</div>`,iconAnchor:anchor||[-12,8]})}).addTo(map);}
+function icon(ll,html,size,anchor,opts){return L.marker(ll,Object.assign({icon:L.divIcon({className:'',html,iconSize:size,iconAnchor:anchor})},opts||{})).addTo(map);}
+[
+  {ll:[-53.7245,-67.7998],t:'Escuela Agrotécnica Salesiana<small>+120 corderos muertos, feb-2026</small>',k:'sq'},
+  {ll:[-53.806,-67.876],t:'Ea. María Behety',k:'tri'},
+  {ll:[-53.915,-67.701],t:'Cabo Peñas · estancias del sur',k:'tri'},
+  {ll:[-53.801,-67.755],t:'Chacra XIII<small>barrio de origen</small>'},
+  {ll:[-53.7635,-67.718],t:'Chacra II'},
+  {ll:[-53.805,-67.670],t:'Margen Sur'},
+  {ll:[-53.7877,-67.7094],t:'Río Grande<small>centro</small>'},
+].forEach(p=>{ if(p.k==='sq') icon(p.ll,'<div class="sq"></div>',[16,16],[8,8],{interactive:false}); if(p.k==='tri') icon(p.ll,'<div class="tri"></div>',[18,16],[9,8],{interactive:false}); label(p.ll,p.t); });
+[[-53.74,-67.79],[-53.79,-67.80],[-53.83,-67.74],[-53.87,-67.70],[-53.76,-67.84],[-53.70,-67.83]].forEach(c=>icon(c,'<div class="cam"></div>',[10,10],[5,5],{interactive:false}));
+for(const id in packs){
+  const p=packs[id];
+  L.circle(p.ll,{radius:p.r,color:p.c,weight:2,dashArray:'6 6',fillColor:p.c,fillOpacity:.2,interactive:false}).addTo(map);
+  const mk=icon(p.ll,`<div class="packm" data-id="${id}" style="background:${p.c};width:34px;height:34px;${p.c===C.medio?'color:#17150f':''}">${p.n}</div>`,[34,34],[17,17]);
+  mk.on('click',()=>select(id));
+  label(p.ll,id+(id==='J-05'?' nueva':''),[-22,-32]);
+}
+L.polyline([[-53.801,-67.755],[-53.79,-67.785],[-53.755,-67.785],[-53.7245,-67.7998]],{color:'#fff',weight:3,dashArray:'8 8',interactive:false}).addTo(map);
+select('J-02');
+
+function toast(t){const el=document.getElementById('toast');el.textContent=t;el.classList.add('show');setTimeout(()=>el.classList.remove('show'),1800);}
 </script>
 </body>
 </html>
