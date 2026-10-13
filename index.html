@@ -326,7 +326,7 @@ for(const id in packs){
 L.polyline([[-53.801,-67.755],[-53.79,-67.785],[-53.755,-67.785],[-53.7245,-67.7998]],{color:'#fff',weight:3,dashArray:'8 8',interactive:false}).addTo(map);
 select('J-02');
 
-function toast(t){const el=document.getElementById('toast');el.textContent=t;el.classList.add('show');setTimeout(()=>el.classList.remove('show'),1800);}
+function toast(t){const el=document.getElementById('toast');el.textContent=t;el.classList.add('show');setTimeout(()=>el.classList.remove('show'),2600);}
 function validate(b){const tr=b.closest('tr');tr.lastElementChild.innerHTML='<span class="tag t-bajo">Validado por Zoonosis</span>';toast('Acción validada: pasa al plan de intervención');}
 function discard(b){const tr=b.closest('tr');tr.classList.add('done');tr.lastElementChild.innerHTML='<span class="tag t-medio">Descartado (falso positivo)</span>';toast('Descartado: el modelo aprende de esta corrección');}
 
