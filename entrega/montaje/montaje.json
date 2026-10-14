@@ -1,0 +1,62 @@
+{
+  "_ayuda": "Editá los números, guardá y corré: python montar.py --prueba SEGUNDO DURACION (rápido) o python montar.py (final). Ver LEEME.md",
+
+  "voz": "../VozMia.m4a",
+  "camara_video": "../VideoGrabadoMia.mp4",
+  "salida": "../Santiago Oroz_Argentina_Video_#AIforImpact2026.mp4",
+  "duracion_final": 179.4,
+
+  "voz_recorte_inicio": 0.0,
+  "camara_desfase": 0.55,
+
+  "anclas": [
+    {"escena": "Portada",                          "pantalla": 0.0,    "voz": 0.0},
+    {"escena": "Ficha 01 · El problema",           "pantalla": 12.63,  "voz": 13.8},
+    {"escena": "Ficha 02 · A quién afecta",        "pantalla": 34.21,  "voz": 39.0},
+    {"escena": "Ficha 03 · La solución",           "pantalla": 52.74,  "voz": 60.9},
+    {"escena": "Ficha 04 · Qué hace la IA",        "pantalla": 71.19,  "voz": 79.0},
+    {"escena": "Navegación al MVP",                "pantalla": 85.61,  "voz": 92.0},
+    {"escena": "MVP · tablero",                    "pantalla": 88.9,   "voz": 93.7},
+    {"escena": "MVP · mapa vivo y ficha",          "pantalla": 98.69,  "voz": 100.0},
+    {"escena": "MVP · ranking",                    "pantalla": 112.44, "voz": 115.9},
+    {"escena": "MVP · WhatsApp",                   "pantalla": 124.11, "voz": 125.3},
+    {"escena": "MVP · cámara trampa",              "pantalla": 137.54, "voz": 137.7},
+    {"escena": "MVP · recorrido",                  "pantalla": 151.24, "voz": 149.6},
+    {"escena": "Navegación a ficha 05",            "pantalla": 160.11, "voz": 157.3},
+    {"escena": "Ficha 05 · viabilidad",            "pantalla": 161.16, "voz": 158.3},
+    {"escena": "Zoom al QR",                       "pantalla": 171.01, "voz": 167.4},
+    {"escena": "Fin",                              "pantalla": 177.4,  "voz": 179.4}
+  ],
+
+  "camara": {
+    "forma": "circulo",
+    "diametro": 250,
+    "borde": 5,
+    "color_borde": "#e9c23a",
+    "margen": 30,
+    "subir": 0,
+    "recorte_cara": [665, 420, 520],
+    "posiciones": [
+      {"desde": 0, "pos": "abajo-der"}
+    ]
+  },
+
+  "subtitulos": {
+    "activados": true,
+    "archivo": "subtitulos.srt",
+    "fuente": "Arial",
+    "tamano": 13,
+    "opacidad_fondo": 80,
+    "margen_abajo": 8,
+    "margen_izq": 20,
+    "margen_der": 75
+  },
+
+  "volumen": {
+    "voz": 1.0,
+    "musica": 0.10,
+    "whoosh": 0.35,
+    "click": 0.45,
+    "ding": 0.25
+  }
+}

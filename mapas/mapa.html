@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,700;800&family=Courier+Prime:wght@400;700&display=swap" rel="stylesheet">
+<style>
+html,body,#m{margin:0;height:100%;background:#0b1b2b;font-family:'Courier Prime',monospace}
+.leaflet-container{background:#0b1b2b}
+.lbl{color:#fff;font-weight:800;white-space:nowrap;text-shadow:0 1px 2px #000,0 0 10px #000;font-size:15px;letter-spacing:.2px}
+.lbl.big{font-size:34px;letter-spacing:0;font-family:'Bricolage Grotesque',sans-serif;font-variation-settings:'wdth' 80;text-transform:uppercase}
+.lbl.city{font-size:22px}
+.lbl small{display:block;font-weight:500;font-size:12px;opacity:.9}
+.lbl.big small{font-size:16px}
+.pin{width:18px;height:18px;border-radius:50%;background:#c8381f;border:3px solid #fff;box-shadow:0 0 0 8px rgba(200,56,31,.35),0 0 30px rgba(200,56,31,.8)}
+.pack{display:grid;place-items:center;border-radius:50%;color:#fff;font-weight:800;font-size:15px;border:2px solid #fff;font-family:'Bricolage Grotesque',sans-serif;box-shadow:0 2px 10px rgba(0,0,0,.6)}
+.sq{width:16px;height:16px;background:#e9c23a;border:2px solid #000;transform:rotate(45deg);box-shadow:0 1px 6px #000}
+.tri{width:0;height:0;border-left:9px solid transparent;border-right:9px solid transparent;border-bottom:16px solid #fff;filter:drop-shadow(0 1px 2px #000)}
+.cam{width:10px;height:10px;border-radius:50%;background:#fff;border:2px solid #000}
+</style></head><body><div id="m"></div>
+<script>
+const q=new URLSearchParams(location.search), view=q.get('view')||'city';
+const m=L.map('m',{zoomControl:false,attributionControl:false,zoomSnap:0.25});
+const sat=L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',{maxZoom:18}).addTo(m);
+const lab=L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places/MapServer/tile/{z}/{y}/{x}',{maxZoom:18,opacity:.9});
+const RG=[-53.7877,-67.7094];
+function label(ll,html,cls,anchor){L.marker(ll,{icon:L.divIcon({className:'',html:`<div class="lbl ${cls||''}">${html}</div>`,iconAnchor:anchor||[-14,10]})}).addTo(m);}
+function icon(ll,html,size,anchor){L.marker(ll,{icon:L.divIcon({className:'',html,iconSize:size,iconAnchor:anchor})}).addTo(m);}
+
+if(view==='context'){
+  lab.addTo(m); m.setView([-38,-64],3.5);
+  icon(RG,'<div class="pin"></div>',[18,18],[9,9]);
+  label(RG,'Río Grande<small>Tierra del Fuego · Argentina</small>','big',[-22,-10]);
+}
+if(view==='island'){
+  m.setView([-53.95,-68.3],7.5);
+  icon(RG,'<div class="pin"></div>',[18,18],[9,9]);
+  label(RG,'Río Grande<small>≈ 100.000 habitantes</small>','big',[-20,-6]);
+  label([-54.80,-68.30],'Ushuaia','city',[-10,-10]);
+  label([-53.16,-70.92],'Punta Arenas (Chile)','city',[-10,-10]);
+  label([-52.9,-68.9],'Estrecho de Magallanes','',[-10,-10]);
+  label([-53.32,-68.57],'Paso San Sebastián (frontera con Chile)','',[-10,-10]);
+  label([-54.55,-66.3],'Isla Grande de Tierra del Fuego','',[-10,-10]);
+  // zona ganadera: estepa norte
+  L.polygon([[-53.25,-68.6],[-53.25,-67.4],[-54.05,-67.4],[-54.2,-68.3],[-53.6,-68.6]],{color:'#e9c23a',weight:2,dashArray:'6 6',fillColor:'#e9c23a',fillOpacity:.08}).addTo(m);
+  label([-53.52,-68.4],'Estepa ganadera: estancias ovinas','',[-10,-10]);
+}
+if(view==='city'||view==='mvp'){
+  m.setView([-53.795,-67.76],12);
+  const places=[
+    {ll:[-53.7245,-67.7998],t:'Escuela Agrotécnica Salesiana<small>+120 corderos muertos, feb-2026</small>',k:'sq'},
+    {ll:[-53.806,-67.876],t:'Ea. María Behety',k:'tri'},
+    {ll:[-53.915,-67.701],t:'Cabo Peñas · estancias del sur',k:'tri'},
+    {ll:[-53.801,-67.755],t:'Chacra XIII<small>barrio de origen</small>',k:''},
+    {ll:[-53.7635,-67.718],t:'Chacra II',k:''},
+    {ll:[-53.805,-67.670],t:'Margen Sur',k:''},
+    {ll:[-53.7877,-67.7094],t:'Río Grande<small>centro</small>',k:''},
+  ];
+  for(const p of places){ if(p.k==='sq') icon(p.ll,'<div class="sq"></div>',[16,16],[8,8]); if(p.k==='tri') icon(p.ll,'<div class="tri"></div>',[18,16],[9,8]); label(p.ll,p.t,'',[-12,8]); }
+  // cámaras trampa
+  for(const c of [[-53.74,-67.79],[-53.79,-67.80],[-53.83,-67.74],[-53.87,-67.70],[-53.76,-67.84],[-53.70,-67.83]]) icon(c,'<div class="cam"></div>',[10,10],[5,5]);
+  // zonas de calor + jaurías
+  const packs=[
+    {ll:[-53.755,-67.785],n:7,id:'J-02',c:'#c8381f',r:2200},
+    {ll:[-53.79,-67.785],n:5,id:'J-05 nueva',c:'#c8381f',r:1500},
+    {ll:[-53.825,-67.86],n:4,id:'J-01',c:'#e9c23a',r:1400},
+    {ll:[-53.865,-67.72],n:3,id:'J-03',c:'#e9c23a',r:1300},
+    {ll:[-53.84,-67.80],n:2,id:'J-04',c:'#5c6132',r:900},
+  ];
+  for(const p of packs){
+    L.circle(p.ll,{radius:p.r,color:p.c,weight:2,dashArray:'6 6',fillColor:p.c,fillOpacity:.2}).addTo(m);
+    icon(p.ll,`<div class="pack" style="background:${p.c};width:34px;height:34px;${p.c==='#e9c23a'?'color:#17150f':''}">${p.n}</div>`,[34,34],[17,17]);
+    label(p.ll,p.id,'',[-22,-32]);
+  }
+  // trayectoria J-02: Chacra XIII -> Escuela
+  L.polyline([[-53.801,-67.755],[-53.79,-67.785],[-53.755,-67.785],[-53.7245,-67.7998]],{color:'#fff',weight:3,dashArray:'8 8'}).addTo(m);
+}
+</script></body></html>

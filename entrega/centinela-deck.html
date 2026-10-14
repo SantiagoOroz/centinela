@@ -1,0 +1,255 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>CENTINELA · Santiago Oroz · #AIforImpact2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,400..800&family=Courier+Prime:ital,wght@0,400;0,700;1,400&family=Public+Sans:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  @page{size:1920px 1080px;margin:0}
+  :root{ --bone:#ebe4d3; --bone2:#e0d7c0; --ink:#17150f; --ink2:#4a463b; --alert:#c8381f; --mark:#e9c23a; --olive:#5c6132; }
+  *{box-sizing:border-box}
+  html,body{margin:0;background:#000;font-family:"Public Sans","Segoe UI",system-ui,sans-serif;color:var(--ink);-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .slide{width:1920px;height:1080px;position:relative;overflow:hidden;background:var(--bone);page-break-after:always;break-after:page;padding:70px 96px}
+  .slide:last-child{page-break-after:auto;break-after:auto}
+  .slide:before{content:"";position:absolute;inset:0;pointer-events:none;opacity:.5;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='300' height='300'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.2 0 0 0 0 0.18 0 0 0 0 0.12 0 0 0 .16 0'/></filter><rect width='300' height='300' filter='url(%23n)'/></svg>")}
+  .slide>*{position:relative}
+  body.single .slide{display:none} body.single .slide.active{display:block}
+  .display{font-family:"Bricolage Grotesque",Impact,sans-serif;font-variation-settings:"wdth" 75,"opsz" 96;font-weight:800;text-transform:uppercase;letter-spacing:-1px;line-height:.9}
+  .mono{font-family:"Courier Prime","Courier New",monospace}
+  .ficha{font-family:"Courier Prime",monospace;font-size:20px;letter-spacing:1px;text-transform:uppercase;display:flex;align-items:center;gap:18px;color:var(--ink)}
+  .ficha b{background:var(--ink);color:var(--bone);padding:4px 10px;font-weight:700}
+  h2{font-family:"Bricolage Grotesque",sans-serif;font-variation-settings:"wdth" 80,"opsz" 96;font-weight:800;font-size:66px;line-height:.98;letter-spacing:-1.5px;margin:18px 0 30px;text-transform:uppercase;max-width:1620px}
+  h2 .hl{background:linear-gradient(transparent 55%,var(--mark) 55%)}
+  h2 .al{color:var(--alert)}
+  h3{font-family:"Bricolage Grotesque",sans-serif;font-variation-settings:"wdth" 85;font-weight:700;font-size:28px;margin:0 0 8px;text-transform:uppercase;letter-spacing:0}
+  p{font-size:23px;line-height:1.45;margin:0 0 12px;color:var(--ink)}
+  .dim{color:var(--ink2)}
+  .foot{position:absolute;left:96px;right:96px;bottom:30px;display:flex;justify-content:space-between;font-family:"Courier Prime",monospace;font-size:17px;color:var(--ink2);border-top:2px solid var(--ink);padding-top:12px;text-transform:uppercase;letter-spacing:1px}
+  .rule{border:0;border-top:2px solid var(--ink);margin:0}
+  .rule.thin{border-top-width:1px}
+  .dash{border:0;border-top:1px dashed var(--ink2);margin:0}
+  ul{margin:0;padding-left:0;list-style:none;font-size:22px;line-height:1.4}
+  ul li{padding:10px 0 10px 34px;border-bottom:1px solid var(--ink2);position:relative}
+  ul li:before{content:"—";position:absolute;left:0;color:var(--alert);font-weight:700}
+  ul li:last-child{border-bottom:0}
+  .big{font-family:"Bricolage Grotesque",sans-serif;font-variation-settings:"wdth" 75,"opsz" 96;font-weight:800;font-size:94px;line-height:.85;letter-spacing:-3px}
+  .big.al{color:var(--alert)}
+  .photo{border:3px solid var(--ink);box-shadow:10px 10px 0 var(--ink);display:block;background:#000}
+  .tape{position:absolute;width:150px;height:38px;background:rgba(233,194,58,.78);transform:rotate(-6deg);box-shadow:0 1px 2px rgba(0,0,0,.2)}
+  .tape.r{transform:rotate(5deg)}
+  .cap{font-family:"Courier Prime",monospace;font-size:16px;line-height:1.4;color:var(--ink2);margin-top:14px}
+  .stamp{display:inline-block;border:3px solid var(--alert);color:var(--alert);padding:8px 14px;font-family:"Courier Prime",monospace;font-weight:700;font-size:19px;letter-spacing:2px;text-transform:uppercase;transform:rotate(-4deg)}
+  .ink{background:var(--ink);color:var(--bone)}
+  .ink p{color:var(--bone)} .ink .dim{color:#bdb4a0}
+  .cols{display:grid;gap:40px}
+  .colsep{border-left:1px dashed var(--ink2);padding-left:34px}
+  .num{font-family:"Bricolage Grotesque",sans-serif;font-variation-settings:"wdth" 75;font-weight:800;font-size:72px;line-height:1;color:transparent;-webkit-text-stroke:2px var(--alert);letter-spacing:-1px}
+  .steps{display:grid;grid-template-columns:repeat(9,1fr);border-top:3px solid var(--ink);margin-top:10px}
+  .st{padding:16px 14px 8px;border-right:1px dashed var(--ink2);font-size:19px;line-height:1.3}
+  .st:last-child{border-right:0}
+  .st .n{font-family:"Bricolage Grotesque",sans-serif;font-weight:800;font-size:40px;line-height:1;margin-bottom:8px;font-variation-settings:"wdth" 75}
+  .st.ai .n{color:var(--alert)} .st.hu .n{color:var(--olive)}
+  .st .w{display:block;font-family:"Courier Prime",monospace;font-size:14px;letter-spacing:1px;text-transform:uppercase;color:var(--ink2);margin-top:8px}
+  .strike{text-decoration:line-through;text-decoration-color:var(--alert);text-decoration-thickness:3px}
+  .hl2{background:var(--mark);padding:0 4px}
+  .note{font-family:"Courier Prime",monospace;font-size:18px;line-height:1.45}
+</style>
+</head>
+<body>
+
+<!-- 1 · PORTADA -->
+<section class="slide" id="s1">
+  <div class="ficha"><b>Cuaderno de campo</b> Challenge #AIforImpact2026 · NAUFest · JA Américas · HP</div>
+  <div style="position:absolute;left:96px;top:150px;width:1000px">
+    <div class="display" style="font-size:300px;letter-spacing:-8px;line-height:.8">Centi</div><div class="display" style="font-size:300px;letter-spacing:-8px;line-height:.8;margin-top:-6px">nela</div>
+    <p style="font-size:30px;line-height:1.3;max-width:900px;margin-top:34px">Una red de alerta temprana con inteligencia artificial para frenar las jaurías de perros asilvestrados <span class="hl2">antes</span> de que ataquen.</p>
+    <div class="note" style="margin-top:38px">
+      SANTIAGO OROZ · 20 años<br>
+      RÍO GRANDE · TIERRA DEL FUEGO · ARGENTINA<br>
+      53°47' S · 67°42' O
+    </div>
+  </div>
+  <div style="position:absolute;right:0;top:120px;width:760px;transform:rotate(2deg)">
+    <img class="photo" src="../mapas/isla.png" style="width:760px;height:570px;object-fit:cover;object-position:60% 50%">
+    <div class="tape" style="left:-40px;top:-14px"></div>
+    <div class="tape r" style="right:-40px;bottom:-12px"></div>
+    <div class="cap">Isla Grande de Tierra del Fuego vista desde el satélite. El punto rojo es Río Grande; el recuadro, la estepa ganadera donde pasa todo esto.</div>
+  </div>
+  <div style="position:absolute;right:10px;top:760px;display:flex;align-items:center;gap:22px">
+    <img src="../mapas/contexto-recorte.png" style="width:170px;height:170px;object-fit:cover;border:3px solid var(--ink);transform:rotate(-3deg)">
+    <div class="note">Extremo sur de América.<br>≈ 100.000 habitantes.<br>A casi 3.000 km de Buenos Aires.</div>
+  </div>
+  <div style="position:absolute;left:96px;bottom:40px" class="stamp">Ficha 00 · Portada</div>
+</section>
+
+<!-- 2 · EL PROBLEMA -->
+<section class="slide" id="s2">
+  <div class="ficha"><b>Ficha 01</b> El problema · qué vi, dónde y cuándo</div>
+  <h2>Los perros que la ciudad deja sueltos se vuelven <span class="al">jaurías</span> que matan a diez minutos del centro</h2>
+  <div class="cols" style="grid-template-columns:900px 1fr;gap:60px;align-items:start">
+    <div style="position:relative;padding-top:14px">
+      <img class="photo" src="../mapas/ciudad.png" style="width:880px;height:600px;object-fit:cover;object-position:50% 35%;transform:rotate(-1deg)">
+      <div class="tape" style="left:300px;top:-6px"></div>
+      <div class="cap">Río Grande desde el satélite. Rombo amarillo: Escuela Agrotécnica Salesiana, atacada en febrero de 2026. Línea punteada: recorrido probable de una jauría desde Chacra XIII (el barrio donde las veo) hasta la escuela.</div>
+    </div>
+    <div>
+      <div class="note" style="font-size:19px;border-left:4px solid var(--alert);padding-left:20px;margin-bottom:18px">Lo que veo: en Chacra XIII y Chacra II, grupos de cuatro o cinco perros sin dueño que de madrugada salen hacia el campo y vuelven. Todos los vecinos los ven. Nadie los cuenta ni los sigue.<br><br>Elegí Río Grande porque vivo acá y puedo hablar con conocimiento. El problema se repite en toda la Patagonia y en otras regiones ganaderas de América.</div>
+      <hr class="rule">
+      <div style="display:grid;grid-template-columns:auto 1fr;gap:10px 26px;align-items:baseline;padding:14px 0">
+        <div class="big al">+120</div><p style="margin:0">corderos muertos en un solo ataque a la Escuela Agrotécnica Salesiana, febrero de 2026</p>
+      </div>
+      <hr class="dash">
+      <div style="display:grid;grid-template-columns:auto 1fr;gap:10px 26px;align-items:baseline;padding:14px 0">
+        <div class="big">117</div><p style="margin:0">perros distintos identificados a mano con cámaras trampa en la isla; +226% de detecciones en cinco años</p>
+      </div>
+      <hr class="dash">
+      <div style="display:grid;grid-template-columns:auto 1fr;gap:10px 26px;align-items:baseline;padding:14px 0">
+        <div class="big">4.950</div><p style="margin:0">animales muertos o heridos del lado chileno de la isla, 2012 a 2025; más del 80% por perros</p>
+      </div>
+      <hr class="rule">
+      <div class="cap" style="font-size:14px;margin-top:10px">Fuentes: Noticias NQN y Diario de Cuyo (feb-2026) · Bichos de Campo, estudio CADIC con cámaras trampa · The Clinic y Diario Constitucional (Chile, 2026) · Ley provincial 1146.</div>
+    </div>
+  </div>
+  <div class="foot"><span>Centinela · Ficha 01 · El problema</span><span>2 / 6</span></div>
+</section>
+
+<!-- 3 · A QUIÉNES AFECTA -->
+<section class="slide" id="s3">
+  <div class="ficha"><b>Ficha 02</b> A quiénes afecta y por qué importa</div>
+  <h2>El origen es urbano. Detectado temprano, un perro se castra y vuelve a casa. Detectado tarde, la única respuesta que queda es <span class="al">matar</span></h2>
+  <div class="cols" style="grid-template-columns:1fr 1fr;gap:70px">
+    <div>
+      <div class="ficha" style="font-size:16px;margin-bottom:10px"><b>Cómo se forma una jauría</b></div>
+      <svg viewBox="0 0 829 300" width="829" height="300" style="display:block">
+        <defs><marker id="ah" markerWidth="12" markerHeight="12" refX="9" refY="6" orient="auto"><path d="M0,0 L12,6 L0,12 z" fill="#c8381f"/></marker></defs>
+        <g font-family="Public Sans" font-size="19" fill="#17150f">
+          <circle cx="60" cy="60" r="34" fill="none" stroke="#17150f" stroke-width="3"/><text x="60" y="68" text-anchor="middle" font-family="Bricolage Grotesque" font-weight="800" font-size="30">1</text>
+          <text x="112" y="52">Un perro con dueño queda suelto</text><text x="112" y="78">en un barrio del borde de la ciudad</text>
+          <path d="M60,96 C 50,140 90,150 110,170" fill="none" stroke="#c8381f" stroke-width="3" marker-end="url(#ah)" stroke-linecap="round"/>
+          <circle cx="150" cy="210" r="34" fill="none" stroke="#17150f" stroke-width="3"/><text x="150" y="218" text-anchor="middle" font-family="Bricolage Grotesque" font-weight="800" font-size="30">2</text>
+          <text x="202" y="202">Se junta con otros y forma</text><text x="202" y="228">una jauría en las chacras</text>
+          <path d="M470,215 C 520,215 545,170 570,150" fill="none" stroke="#c8381f" stroke-width="3" marker-end="url(#ah)" stroke-linecap="round"/>
+          <circle cx="610" cy="110" r="34" fill="#c8381f" stroke="#c8381f" stroke-width="3"/><text x="610" y="118" text-anchor="middle" font-family="Bricolage Grotesque" font-weight="800" font-size="30" fill="#fff">3</text>
+          <text x="658" y="98" font-weight="700" font-size="18">Ataca ovejas, fauna</text><text x="658" y="122" font-weight="700" font-size="18">nativa y vecinos</text>
+          <path d="M610,150 C 610,200 610,220 610,240" fill="none" stroke="#c8381f" stroke-width="3" stroke-dasharray="6 6" marker-end="url(#ah)"/>
+          <text x="470" y="272" font-family="Courier Prime" font-size="17" fill="#c8381f">respuesta tardía:</text><text x="470" y="294" font-family="Courier Prime" font-size="17" fill="#c8381f">pérdidas, denuncias, matanzas</text>
+        </g>
+      </svg>
+      <hr class="rule">
+      <div style="display:flex;gap:26px;align-items:center;padding:22px 0 0">
+        <div class="display" style="font-size:86px;color:var(--alert)">Ley<br>1146</div>
+        <p style="font-size:21px;margin:0">La ley provincial ya declara al perro asilvestrado <b>especie exótica invasora</b> y prevé programas de control, pero casi no se aplica. Falta lo básico: <span class="hl2">saber cuántos perros hay, dónde están, de qué barrio salen y hacia dónde van.</span> Sin ese dato, municipio, productores y científicos actúan a ciegas y siempre tarde.</p>
+      </div>
+    </div>
+    <div>
+      <div class="ficha" style="font-size:16px;margin-bottom:10px"><b>Quiénes pagan el costo</b></div>
+      <ul style="font-size:21px">
+        <li><h3>Productores y escuelas rurales</h3>Pierden corderos en plena parición. La Escuela Agrotécnica, que forma a los jóvenes del campo, sufre ataques repetidos.</li>
+        <li><h3>Vecinos de la periferia</h3>Mordeduras y miedo a caminar de noche o a dejar salir a los chicos. Son los mismos barrios donde nacen las jaurías.</li>
+        <li><h3>Fauna nativa</h3>Guanacos, aves y el bosque fueguino tienen hoy un depredador tope que no debería estar ahí.</li>
+        <li><h3>Los propios perros</h3>Hambre, frío extremo y, al final, matanzas reactivas. Un perro detectado a tiempo vuelve a su casa o se castra.</li>
+      </ul>
+    </div>
+  </div>
+  <div class="foot"><span>Centinela · Ficha 02 · A quiénes afecta</span><span>3 / 6</span></div>
+</section>
+
+<!-- 4 · LA SOLUCIÓN -->
+<section class="slide" id="s4">
+  <div class="ficha"><b>Ficha 03</b> La solución · cómo funciona</div>
+  <h2>Centinela convierte fotos y mensajes de la comunidad en un <span class="hl">mapa vivo</span> de jaurías y un plan de intervención</h2>
+  <div class="cols" style="grid-template-columns:1fr 1fr 1fr;gap:0">
+    <div style="padding-right:34px">
+      <div class="ficha" style="font-size:16px;margin-bottom:6px"><b>Entra</b></div>
+      <ul style="font-size:21px"><li>Fotos de las cámaras trampa que los investigadores ya tienen en el campo</li><li>Fotos y mensajes de vecinos y productores por WhatsApp</li><li>Mapa de estancias, escuelas y barrios; calendario de pariciones</li></ul>
+    </div>
+    <div class="colsep" style="padding-right:34px">
+      <div class="ficha" style="font-size:16px;margin-bottom:6px"><b style="background:var(--alert)">La IA procesa</b></div>
+      <ul style="font-size:21px"><li>Detecta perros y reconoce a cada individuo</li><li>Lee los mensajes y los convierte en registros</li><li>Agrupa jaurías, zonas calientes y riesgo de ataque</li></ul>
+    </div>
+    <div class="colsep">
+      <div class="ficha" style="font-size:16px;margin-bottom:6px"><b style="background:var(--olive)">Las personas deciden</b></div>
+      <ul style="font-size:21px"><li>Zoonosis municipal y Asociación Rural validan el tablero</li><li>Alerta por WhatsApp a estancias y escuelas en riesgo</li><li>Castración y devolución de perros con dueño en el barrio de origen</li></ul>
+    </div>
+  </div>
+  <div class="steps" style="margin-top:34px">
+    <div class="st"><div class="n">1</div>Vecino, productor o cámara envía foto o mensaje<span class="w">Comunidad</span></div>
+    <div class="st"><div class="n">2</div>Se guarda con fecha y ubicación<span class="w">Sistema</span></div>
+    <div class="st ai"><div class="n">3</div>Visión: detecta y re-identifica perros<span class="w">IA</span></div>
+    <div class="st ai"><div class="n">4</div>Lenguaje: el texto se vuelve registro<span class="w">IA</span></div>
+    <div class="st ai"><div class="n">5</div>Agrupa jaurías y calcula el riesgo de ataque<span class="w">IA</span></div>
+    <div class="st hu"><div class="n">6</div>Zoonosis y Asociación Rural validan o corrigen<span class="w">Personas</span></div>
+    <div class="st"><div class="n">7</div>Tablero web y alerta por WhatsApp a la zona<span class="w">Sistema</span></div>
+    <div class="st hu"><div class="n">8</div>Castración, dueños recuperados, guardia reforzada<span class="w">Personas</span></div>
+    <div class="st ai"><div class="n">9</div>Cada acción registrada mejora el modelo<span class="w">IA</span></div>
+  </div>
+  <div class="cap" style="margin-top:26px"><span style="color:var(--alert);font-weight:700">Rojo</span> = tarea de la IA · <span style="color:var(--olive);font-weight:700">Verde</span> = decisión humana · Responsables: comunidad (reporta), equipo Centinela (sistema), Zoonosis de la Municipalidad de Río Grande (decide), Asociación Rural y escuelas (reciben alertas), CADIC e INTA (validan la ciencia).</div>
+  <div class="foot"><span>Centinela · Ficha 03 · La solución</span><span>4 / 6</span></div>
+</section>
+
+<!-- 5 · ROL DE LA IA -->
+<section class="slide" id="s5">
+  <div class="ficha"><b>Ficha 04</b> Rol concreto de la inteligencia artificial</div>
+  <h2>Tres tareas que nadie puede hacer a mano a la <span class="hl">escala y velocidad</span> que el problema exige</h2>
+  <div class="cols" style="grid-template-columns:1fr 1fr 1fr;gap:0;border-top:3px solid var(--ink);padding-top:22px">
+    <div style="padding-right:34px"><div class="num">01</div><h3>Visión por computadora</h3><p style="font-size:20px"><b>Tarea:</b> detectar perros en cada foto y <b>re-identificar individuos</b> por pelaje, tamaño y marcas, para contar perros reales y no detecciones repetidas.<br><b>Datos:</b> fotos con fecha y GPS.<br><b>Resultado:</b> ficha por perro y por jauría.</p></div>
+    <div class="colsep" style="padding-right:34px"><div class="num">02</div><h3>Lenguaje natural</h3><p style="font-size:20px"><b>Tarea:</b> leer mensajes informales ("vi 5 perros en Chacra XIII a las 7, uno con collar") y extraer lugar, hora, cantidad, indicio de dueño y dirección.<br><b>Datos:</b> WhatsApp y Facebook de vecinos.<br><b>Resultado:</b> registros que hoy se pierden.</p></div>
+    <div class="colsep"><div class="num">03</div><h3>Modelo de riesgo</h3><p style="font-size:20px"><b>Tarea:</b> cruzar jaurías, estancias, escuelas y época de parición para estimar el riesgo de ataque por zona en los próximos 7 días.<br><b>Datos:</b> historial de detecciones y ataques.<br><b>Resultado:</b> ranking semanal de intervención.</p></div>
+  </div>
+  <div class="cols" style="grid-template-columns:1fr 1fr;gap:60px;margin-top:26px;border-top:3px solid var(--ink);padding-top:20px">
+    <div><div class="ficha" style="font-size:16px;margin-bottom:8px"><b style="background:var(--alert)">Sin IA</b></div>
+      <p style="font-size:21px" class="strike">Identificar 117 perros a mano llevó años de trabajo científico.</p>
+      <p style="font-size:21px" class="strike">Los reportes vecinales mueren en grupos de WhatsApp.</p>
+      <p style="font-size:21px" class="strike">Nadie sabe de qué barrio sale cada jauría: se actúa después del ataque.</p></div>
+    <div><div class="ficha" style="font-size:16px;margin-bottom:8px"><b style="background:var(--olive)">Con IA</b></div>
+      <p style="font-size:21px"><span class="hl2">Re-identificación en minutos</span>, continua y con cada foto nueva.</p>
+      <p style="font-size:21px"><span class="hl2">Cada mensaje se vuelve un dato</span> en el mapa.</p>
+      <p style="font-size:21px"><span class="hl2">Se interviene en el origen</span> (castración, dueños) antes del ataque.</p></div>
+  </div>
+  <div class="ink" style="margin-top:20px;padding:18px 26px"><p style="margin:0;font-size:20px"><b>Ética y control humano.</b> La IA propone; Zoonosis municipal, la Asociación Rural y el CADIC revisan. No identifica personas y los reportes son anónimos. No recomienda matar animales: prioriza castración, tenencia responsable y devolución de perros con dueño. Cada corrección humana entrena al modelo.</p></div>
+  <div class="foot"><span>Centinela · Ficha 04 · Rol de la IA</span><span>5 / 6</span></div>
+</section>
+
+<!-- 6 · MVP Y VIABILIDAD -->
+<section class="slide" id="s6">
+  <div class="ficha"><b>Ficha 05</b> MVP, viabilidad e impacto</div>
+  <h2 style="font-size:54px">El MVP interactivo ya muestra el recorrido completo: <span class="hl">del reporte al plan de acción</span></h2>
+  <div class="cols" style="grid-template-columns:900px 1fr;gap:50px;align-items:start">
+    <div>
+      <div style="position:relative;margin-top:6px">
+        <img class="photo" src="../capturas/mvp-tablero-recorte.png" style="width:860px;transform:rotate(-1deg)">
+        <div class="tape" style="left:340px;top:-16px"></div>
+        <div class="ficha" style="position:absolute;left:-14px;top:-18px;font-size:16px;transform:rotate(-2deg)"><b>A · Mapa vivo + ficha de jauría</b></div>
+      </div>
+      <div style="position:relative;margin-top:34px">
+        <img class="photo" src="../capturas/mvp-ia-detalle.png" style="width:860px;transform:rotate(.7deg)">
+        <div class="tape r" style="right:-30px;top:-14px"></div>
+        <div class="ficha" style="position:absolute;left:-14px;top:-18px;font-size:16px;transform:rotate(-2deg)"><b style="background:var(--alert)">B · WhatsApp → dato · cámara trampa → individuos</b></div>
+      </div>
+      <div class="cap" style="margin-top:14px">A: cada jauría tiene ficha, riesgo y acción propuesta que una persona valida. B: un mensaje se vuelve registro; una foto de jauría, seis individuos con collar, pelaje y condición. Datos ficticios.</div>
+    </div>
+    <div>
+      <div class="ficha" style="font-size:16px;margin-bottom:6px"><b>Viable hoy</b></div>
+      <ul style="font-size:19px"><li>Modelos abiertos de detección y re-identificación animal, ya probados con cámaras trampa</li><li>Modelo de lenguaje para los reportes, WhatsApp Business y un mapa web</li><li>Cámaras ya instaladas por investigadores y celulares de vecinos: costo inicial bajo</li></ul>
+      <div class="ficha" style="font-size:16px;margin:18px 0 6px"><b>Posibles aliados en Río Grande</b></div>
+      <p style="font-size:19px">Zoonosis municipal · Asociación Rural de Tierra del Fuego · CADIC e INTA · Escuela Agrotécnica Salesiana · vecinos de Chacra XIII y Margen Sur.</p>
+      <div class="ink" style="padding:16px 22px;margin-top:14px">
+        <div class="display" style="font-size:34px;color:var(--mark);margin-bottom:8px">Nace en Río Grande.<br>Sirve donde haya este problema.</div>
+        <p style="font-size:18px;margin:0">Perros asilvestrados atacan ganado y fauna en toda la Patagonia argentina y chilena, en Uruguay, en la Puna y en zonas rurales de todo el continente. Centinela solo necesita tres cosas que existen en cualquier lugar: celulares, un municipio y productores con ganas de reportar.</p>
+      </div>
+      <div class="note" style="margin-top:14px;border-top:2px solid var(--ink);padding-top:12px;font-size:17px"><b>Piloto:</b> una temporada de parición (septiembre a diciembre), 10 cámaras trampa, un WhatsApp y el tablero en el corredor Chacra XIII → Escuela Agrotécnica → estancias vecinas. <b>Métricas:</b> perros identificados, jaurías mapeadas, castraciones dirigidas, ataques y corderos perdidos por temporada.</div>
+      <div id="qrbox" style="display:none;margin-top:14px;display:flex;gap:16px;align-items:center;border:2px dashed var(--ink);padding:10px 14px">
+        <img id="qr" src="qr.png" style="width:110px;height:110px" onerror="this.parentNode.style.display='none'">
+        <div class="note" style="font-size:16px"><b>Probá el MVP interactivo</b><br><span id="qrurl">santiagooroz.github.io/centinela</span></div>
+      </div>
+    </div>
+  </div>
+  <div class="foot"><span>Centinela · Ficha 05 · MVP y viabilidad · Santiago Oroz · #AIforImpact2026</span><span>6 / 6</span></div>
+</section>
+
+<script>
+const m=location.hash.match(/^#s(\d)$/); if(m){document.body.classList.add('single');document.getElementById('s'+m[1]).classList.add('active');}
+</script>
+</body>
+</html>

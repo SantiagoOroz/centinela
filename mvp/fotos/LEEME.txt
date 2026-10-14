@@ -1,0 +1,3 @@
+Poné acá una foto real de perros sueltos con el nombre c03.jpg (horizontal, 16:9 ideal).
+El MVP la muestra automáticamente en lugar de la ilustración de la cámara trampa C-03.
+Si la foto cambia la posición de los perros, avisá para ajustar los recuadros de detección.
